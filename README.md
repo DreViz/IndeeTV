@@ -1,39 +1,96 @@
-# IndeeTV
-# Django REST API Project
+#Playlist_API
+Description
+This project is a RESTful API for managing songs and playlists. It allows users to perform CRUD operations on songs and playlists, as well as manage songs within playlists.
 
-This project is a Django-based RESTful API for managing songs and playlists.
+##Features
+Manage Songs: Create, retrieve, update, and delete songs.
+Manage Playlists: Create, retrieve, update, and delete playlists.
+Manage Playlist Songs: Add, remove, and reorder songs within playlists.
+Pagination: Paginate through lists of songs and playlists.
+Technologies Used
+Django: Python web framework
+Django REST Framework: Toolkit for building Web APIs
+SQLite: Database management system
+Python: Programming language
+##Setup Instructions
+Clone the repository:
+git clone <repository-url>
 
-## Features
+Navigate to the project directory:
+cd <project-directory>
 
-- Allows users to perform CRUD operations on songs and playlists.
-- Provides endpoints for managing songs and playlists.
-- Supports pagination for listing songs in playlists.
-- Implements functionality to reorder songs within playlists.
+Install dependencies:
+pip install -r requirements.txt
 
-## Technologies Used
+Run migrations to create database tables:
+python manage.py migrate
 
-- Django: Python-based web framework for building the API.
-- Django REST Framework: Toolkit for building Web APIs in Django.
-- SQLite: Lightweight relational database management system used for data storage.
+Start the development server:
+python manage.py runserver
 
-## Installation
+Access the API in your web browser or using tools like cURL or Postman:
+1.API endpoint for managing songs: http://localhost:8000/api/songs/
+2.API endpoint for managing playlists: http://localhost:8000/api/playlists/
 
+#API Documentation
+Sure, here's the updated API documentation based on the provided code:
 
-API Endpoints
-/api/songs/:
-POST: Create a new song.
-GET: Retrieve a list of all songs.
-/api/songs/<song_id>/:
-PUT: Update details of a specific song.
-DELETE: Delete a specific song.
-/api/playlists/:
-POST: Create a new playlist.
-GET: Retrieve a list of all playlists.
-/api/playlists/<playlist_id>/:
-PUT: Update details of a specific playlist.
-DELETE: Delete a specific playlist.
-/api/playlists/<playlist_id>/songs/:
-GET: Retrieve a list of songs in a specific playlist.
-/api/playlists/<playlist_id>/songs/<song_id>/:
-PUT: Reorder or remove a specific song from a playlist.
-DELETE: Remove a specific song from a playlist.
+### Songs Endpoints
+
+#### Manage Songs
+
+- **POST** `/api/songs/`: Create a new song
+- **GET** `/api/songs/`: Retrieve list of songs
+
+### Playlists Endpoints
+
+#### Manage Playlists
+
+- **POST** `/api/playlists/`: Create a new playlist
+- **GET** `/api/playlists/`: Retrieve paginated list of playlists
+- **GET** `/api/playlists/<playlist_id>/`: Retrieve details of a specific playlist
+- **PUT** `/api/playlists/<playlist_id>/`: Update details of a specific playlist
+- **DELETE** `/api/playlists/<playlist_id>/`: Delete a specific playlist
+
+#### Manage Playlist Songs
+
+- **POST** `/api/playlists/<playlist_id>/songs/`: Add a song to a playlist
+- **DELETE** `/api/playlists/<playlist_id>/songs/<song_id>/`: Remove a song from a playlist
+- **PUT** `/api/playlists/<playlist_id>/songs/<song_id>/`: Reorder a song within a playlist
+
+#### List Playlist Songs
+
+- **GET** `/api/playlists/<playlist_id>/songs/`: Retrieve paginated list of songs in a playlist
+
+### Pagination
+
+For endpoints that return lists of items (songs and playlists), pagination is applied with a default page size of 10. Pagination information is included in the response headers as well as in the response body:
+
+- **Response Headers**:
+  - `Link`: Provides links to the next and previous pages of results.
+
+- **Response Body**:
+  ```json
+  {
+    "count": <int>,               // Total count of items
+    "next": "<str> | null",       // Link to the next page of results
+    "previous": "<str> | null",   // Link to the previous page of results
+    "results": [                  // List of items (maximum of 10 entries)
+      {
+        "id": <int>,               // Unique identifier of the item
+        "name": "<str>",           // Name of the item
+        "artist": "<str>",         // Artist of the song (if applicable)
+        "release_year": <int>,     // Release year of the song (if applicable)
+        "position": <int>          // Position of the song within the playlist (if applicable)
+      },
+      // Additional items...
+    ]
+  }
+  ```
+
+### Error Handling
+
+- 404 Not Found: Returned when a requested resource does not exist.
+- 400 Bad Request: Returned when there is an issue with the request payload or parameters.
+
+Feel free to customize the documentation further based on your project's specific requirements and endpoints.
