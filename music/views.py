@@ -68,7 +68,7 @@ def manage_playlist(request, playlist_id):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if request.method == 'PUT':
-        # Only update the name field if it's provided in the request data
+       
         if 'name' in request.data:
             playlist.name = request.data['name']
             playlist.save()
@@ -93,7 +93,7 @@ def list_playlist_songs(request, playlist_id):
     paginator.page_size = 10
     paginated_songs = paginator.paginate_queryset(songs, request)
 
-    # Assigning positions to songs starting from 1
+    
     for i, song in enumerate(paginated_songs, start=1):
         song.position = i
         song.save()
