@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # Songs endpoints
+    
     path('api/songs/', views.manage_songs, name='manage_songs'),
 
     # Playlists endpoints
