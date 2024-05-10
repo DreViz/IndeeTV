@@ -11,7 +11,7 @@ class Song(models.Model):
         if not self.position:
             # Calculate the position based on the number of songs in the playlists
             self.position = self.playlists.count() + 1
-            self.save(update_fields=['position'])  # Save the updated position
+            self.save(update_fields=['position'])  
 
 class Playlist(models.Model):
     name = models.CharField(max_length=100)
@@ -22,5 +22,5 @@ class Playlist(models.Model):
         Add a song to the playlist.
         """
         self.songs.add(song)
-        song.position = self.songs.count()  # Update the position of the song
-        song.save(update_fields=['position'])  # Save the updated position
+        song.position = self.songs.count() 
+        song.save(update_fields=['position'])  
